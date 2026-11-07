@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ProofPilot — Learn by Experimenting</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230e1217'/%3E%3Cpath d='M8 7h16' stroke='%23e8edf2' stroke-width='2'/%3E%3Cpath d='M16 7l5 14' stroke='%23e8edf2' stroke-width='2'/%3E%3Ccircle cx='21.5' cy='22.5' r='3.5' fill='%234fd1ff'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css" />
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <rect x="1" y="1" width="38" height="38" rx="10" class="bm-bg" />
+        <path d="M9 10h22" class="bm-line" />
+        <g class="bm-hatch"><path d="M11 10l-2-3M15 10l-2-3M19 10l-2-3M23 10l-2-3M27 10l-2-3M31 10l-2-3" /></g>
+        <path d="M20 10l7 17" class="bm-rod" />
+        <path d="M20 10v14" class="bm-dash" />
+        <circle cx="20" cy="10" r="2" class="bm-pivot" />
+        <circle cx="27.4" cy="28" r="4.2" class="bm-bob" />
+      </svg>
+      <div>
+        <div class="brand-name">ProofPilot</div>
+        <div class="brand-tag">Learn by experimenting</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span id="ai-status" class="pill pill-muted"><span class="dot"></span><span class="pill-text">Checking AI…</span></span>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="prompt-card">
+      <form id="prompt-form" class="prompt-form" autocomplete="off">
+        <div class="prompt-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 3l1.8 4.7L18.5 9.5 13.8 11.3 12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>
+        </div>
+        <input id="prompt-input" type="text" maxlength="600"
+               placeholder="Describe an experiment… e.g. “Simulate a ball launched at 25 m/s at 40 degrees”"
+               aria-label="Describe a physics experiment" />
+        <button id="prompt-submit" class="btn btn-primary" type="submit">
+          <span class="btn-label">Generate</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        </button>
+      </form>
+      <div id="examples" class="examples"></div>
+    </section>
+
+    <section class="stage-col">
+      <div class="card stage-card">
+        <div class="stage-head">
+          <div class="stage-titles">
+            <div class="eyebrow"><span id="scene-kind">Simulation</span><span id="spec-source" class="source-badge"></span></div>
+            <h1 id="scene-title">Projectile Motion</h1>
+            <p id="scene-summary" class="summary"></p>
+            <div id="assumptions" class="assumptions"></div>
+          </div>
+        </div>
+        <div class="canvas-wrap" id="canvas-wrap">
+          <canvas id="sim-canvas" aria-label="Physics simulation"></canvas>
+          <div id="loading" class="loading" hidden>
+            <div class="spinner"></div>
+            <div>Interpreting your experiment…</div>
+          </div>
+          <div class="overlay-toggles" id="overlay-toggles"></div>
+        </div>
+        <div class="transport">
+          <div class="transport-group">
+            <button class="icon-btn primary" id="btn-play" title="Play / pause (Space)">
+              <svg class="i-play" viewBox="0 0 24 24"><path d="M7 5l12 7-12 7z"/></svg>
+              <svg class="i-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+            </button>
+            <button class="icon-btn" id="btn-restart" title="Restart (R)"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4h4"/></svg></button>
+            <button class="icon-btn" id="btn-step" title="Step 1/60 s (→)"><svg viewBox="0 0 24 24"><path d="M6 5l9 7-9 7z"/><path d="M17 5h2v14h-2z"/></svg></button>
+          </div>
+          <div class="time-display"><span class="t-label">t =</span> <span id="time-value">0.00</span> <span class="t-unit">s</span></div>
+          <div class="transport-group speed" id="speed-group" role="radiogroup" aria-label="Playback speed"></div>
+        </div>
+        <div class="readouts" id="readouts"></div>
+      </div>
+
+      <div class="card graph-card">
+        <div class="card-head graph-head">
+          <h2>Live graph</h2>
+          <div class="graph-tools" id="graph-tools">
+            <button type="button" class="btn btn-sm" data-g="vtoggle" title="Switch between speed |v| and the velocity components">|v| ⇄ vx, vy</button>
+            <button type="button" class="btn btn-sm" data-g="compare" title="Show the previous run (before your last change) as dashed lines">Compare previous</button>
+            <button type="button" class="btn btn-sm" data-g="fit" title="Show the whole run (scroll on the graph to zoom, drag to pan)">Fit all</button>
+            <button type="button" class="btn btn-sm" data-g="reset" title="Clear the recorded data">Reset</button>
+          </div>
+        </div>
+        <div class="graph-legend" id="graph-legend"></div>
+        <div class="graph-wrap"><canvas id="graph-canvas"></canvas><div class="graph-hint" id="graph-hint">Hover to inspect values · scroll to zoom · drag to pan</div></div>
+      </div>
+    </section>
+
+    <aside class="side-col">
+      <div class="card tabs-card">
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-tab="experiment" role="tab">Experiment</button>
+          <button class="tab" data-tab="predict" role="tab">Predict <span class="tab-dot" id="predict-dot"></span></button>
+          <button class="tab" data-tab="equations" role="tab">Equations</button>
+        </div>
+        <div class="tab-panel" data-panel="experiment" id="panel-experiment"></div>
+        <div class="tab-panel" data-panel="predict" id="panel-predict" hidden></div>
+        <div class="tab-panel" data-panel="equations" id="panel-equations" hidden></div>
+      </div>
+
+      <div class="card tutor-card">
+        <div class="card-head">
+          <h2><span class="tutor-avatar" aria-hidden="true">✦</span> AI Tutor</h2>
+          <span id="tutor-source" class="muted small"></span>
+        </div>
+        <div class="tutor-log" id="tutor-log" aria-live="polite"></div>
+        <div class="tutor-suggest" id="tutor-suggest"></div>
+        <form class="tutor-form" id="tutor-form" autocomplete="off">
+          <input id="tutor-input" type="text" placeholder="Ask about what you see…" maxlength="1000" aria-label="Ask the tutor" />
+          <button class="icon-btn primary" type="submit" title="Send"><svg viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2.5-6.5z"/></svg></button>
+        </form>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    window.__errors = [];
+    addEventListener('error', (e) => window.__errors.push(`${e.message} @ ${e.filename}:${e.lineno}`));
+    addEventListener('unhandledrejection', (e) => window.__errors.push(String(e.reason?.stack || e.reason)));
+  </script>
+  <script src="/vendor/katex/katex.min.js"></script>
+  <script src="/vendor/katex/contrib/auto-render.min.js"></script>
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

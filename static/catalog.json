@@ -1,0 +1,178 @@
+{
+  "projectile": {
+    "title": "Projectile Motion",
+    "description": "A ball launched from the ground or a cliff with a chosen speed and angle, optionally with quadratic air drag.",
+    "keywords": ["projectile", "launch", "launched", "thrown", "throw", "kick", "kicked", "fired", "cannon", "ball", "trajectory", "range", "cliff", "arc", "shot", "angle"],
+    "params": {
+      "v0":    {"label": "Launch speed",        "symbol": "v_0",      "unit": "m/s",  "min": 1,   "max": 80,   "step": 0.5,    "default": 20},
+      "angle": {"label": "Launch angle",        "symbol": "\\theta",  "unit": "°",    "min": 0,   "max": 90,   "step": 1,      "default": 45},
+      "h0":    {"label": "Launch height",       "symbol": "h_0",      "unit": "m",    "min": 0,   "max": 100,  "step": 0.5,    "default": 0},
+      "m":     {"label": "Mass",                "symbol": "m",        "unit": "kg",   "min": 0.05, "max": 20,  "step": 0.05,   "default": 1},
+      "drag":  {"label": "Drag constant",       "symbol": "k",        "unit": "kg/m", "min": 0,   "max": 0.05, "step": 0.0005, "default": 0},
+      "g":     {"label": "Gravity",             "symbol": "g",        "unit": "m/s²", "min": 0.5, "max": 30,   "step": 0.01,   "default": 9.81}
+    },
+    "options": {}
+  },
+  "pendulum": {
+    "title": "Simple Pendulum",
+    "description": "A bob on a string or rigid rod swinging from a fixed pivot. Non-linear (no small-angle approximation); a string can go slack.",
+    "keywords": ["pendulum", "swing", "swinging", "bob", "clock", "oscillat"],
+    "params": {
+      "L":      {"label": "Length",           "symbol": "L",        "unit": "m",     "min": 0.2,  "max": 10,  "step": 0.05, "default": 2},
+      "theta0": {"label": "Release angle",    "symbol": "\\theta_0","unit": "°",     "min": -170, "max": 170, "step": 1,    "default": 30},
+      "omega0": {"label": "Initial angular speed", "symbol": "\\omega_0", "unit": "rad/s", "min": -8, "max": 8, "step": 0.1, "default": 0},
+      "m":      {"label": "Bob mass",         "symbol": "m",        "unit": "kg",    "min": 0.05, "max": 20,  "step": 0.05, "default": 1},
+      "b":      {"label": "Damping",          "symbol": "b",        "unit": "1/s",   "min": 0,    "max": 2,   "step": 0.01, "default": 0},
+      "g":      {"label": "Gravity",          "symbol": "g",        "unit": "m/s²",  "min": 0.5,  "max": 30,  "step": 0.01, "default": 9.81}
+    },
+    "options": {
+      "connector": {"label": "Connector", "choices": ["string", "rod"], "default": "string"}
+    }
+  },
+  "spring": {
+    "title": "Horizontal Mass–Spring",
+    "description": "A block on a horizontal surface attached to a wall by a spring. Supports viscous damping and Coulomb (sliding) friction.",
+    "keywords": ["spring", "hooke", "oscillator", "harmonic", "shm", "block", "horizontal", "stiffness", "n/m"],
+    "params": {
+      "m":  {"label": "Mass",              "symbol": "m",   "unit": "kg",   "min": 0.1, "max": 20,  "step": 0.1,  "default": 1},
+      "k":  {"label": "Spring constant",   "symbol": "k",   "unit": "N/m",  "min": 1,   "max": 500, "step": 1,    "default": 20},
+      "x0": {"label": "Initial stretch",   "symbol": "x_0", "unit": "m",    "min": -0.6, "max": 0.6, "step": 0.01, "default": 0.3},
+      "v0": {"label": "Initial velocity",  "symbol": "v_0", "unit": "m/s",  "min": -5,  "max": 5,   "step": 0.1,  "default": 0},
+      "b":  {"label": "Damping",           "symbol": "b",   "unit": "kg/s", "min": 0,   "max": 10,  "step": 0.05, "default": 0},
+      "mu": {"label": "Friction coefficient", "symbol": "\\mu", "unit": "",  "min": 0,   "max": 1,   "step": 0.01, "default": 0},
+      "g":  {"label": "Gravity",           "symbol": "g",   "unit": "m/s²", "min": 0.5, "max": 30,  "step": 0.01, "default": 9.81}
+    },
+    "options": {}
+  },
+  "spring_vertical": {
+    "title": "Hanging Mass–Spring",
+    "description": "A mass hanging from a ceiling on a vertical spring, oscillating about its equilibrium position.",
+    "keywords": ["hanging", "vertical spring", "hung", "suspended", "bungee", "dangling", "ceiling"],
+    "params": {
+      "m":  {"label": "Mass",                       "symbol": "m",   "unit": "kg",   "min": 0.1, "max": 10,  "step": 0.1,  "default": 0.5},
+      "k":  {"label": "Spring constant",            "symbol": "k",   "unit": "N/m",  "min": 2,   "max": 500, "step": 1,    "default": 25},
+      "y0": {"label": "Pulled down from equilibrium", "symbol": "y_0", "unit": "m",  "min": -0.5, "max": 0.5, "step": 0.01, "default": 0.15},
+      "v0": {"label": "Initial velocity (down +)",  "symbol": "v_0", "unit": "m/s",  "min": -3,  "max": 3,   "step": 0.1,  "default": 0},
+      "b":  {"label": "Damping",                    "symbol": "b",   "unit": "kg/s", "min": 0,   "max": 5,   "step": 0.05, "default": 0},
+      "g":  {"label": "Gravity",                    "symbol": "g",   "unit": "m/s²", "min": 0.5, "max": 30,  "step": 0.01, "default": 9.81}
+    },
+    "options": {}
+  },
+  "incline": {
+    "title": "Block on an Inclined Plane",
+    "description": "A block on a ramp with static and kinetic friction; shows the free-body diagram and whether/how it slides.",
+    "keywords": ["incline", "inclined", "ramp", "slope", "slide", "sliding", "slides", "friction", "wedge", "hill"],
+    "params": {
+      "angle": {"label": "Incline angle",           "symbol": "\\alpha",   "unit": "°",    "min": 2,   "max": 75,  "step": 1,    "default": 30},
+      "m":     {"label": "Mass",                    "symbol": "m",         "unit": "kg",   "min": 0.1, "max": 50,  "step": 0.1,  "default": 2},
+      "mu_s":  {"label": "Static friction coeff.",  "symbol": "\\mu_s",    "unit": "",     "min": 0,   "max": 1.5, "step": 0.01, "default": 0.3},
+      "mu_k":  {"label": "Kinetic friction coeff.", "symbol": "\\mu_k",    "unit": "",     "min": 0,   "max": 1.5, "step": 0.01, "default": 0.2},
+      "d":     {"label": "Ramp length",             "symbol": "d",         "unit": "m",    "min": 1,   "max": 20,  "step": 0.5,  "default": 5},
+      "v0":    {"label": "Initial speed down ramp", "symbol": "v_0",       "unit": "m/s",  "min": 0,   "max": 10,  "step": 0.1,  "default": 0},
+      "g":     {"label": "Gravity",                 "symbol": "g",         "unit": "m/s²", "min": 0.5, "max": 30,  "step": 0.01, "default": 9.81}
+    },
+    "options": {}
+  },
+  "collision": {
+    "title": "1-D Collision on a Track",
+    "description": "Two carts on a frictionless track collide with a chosen coefficient of restitution (elastic, inelastic or perfectly inelastic).",
+    "keywords": ["collision", "collide", "collides", "crash", "elastic", "inelastic", "momentum", "cart", "carts", "bounce", "impact", "restitution", "hits"],
+    "params": {
+      "m1": {"label": "Mass of cart 1",        "symbol": "m_1", "unit": "kg",  "min": 0.1, "max": 20, "step": 0.1,  "default": 2},
+      "m2": {"label": "Mass of cart 2",        "symbol": "m_2", "unit": "kg",  "min": 0.1, "max": 20, "step": 0.1,  "default": 1},
+      "u1": {"label": "Initial velocity 1",    "symbol": "u_1", "unit": "m/s", "min": -10, "max": 10, "step": 0.1,  "default": 3},
+      "u2": {"label": "Initial velocity 2",    "symbol": "u_2", "unit": "m/s", "min": -10, "max": 10, "step": 0.1,  "default": -1},
+      "e":  {"label": "Restitution",           "symbol": "e",   "unit": "",    "min": 0,   "max": 1,  "step": 0.01, "default": 1}
+    },
+    "options": {}
+  },
+  "atwood": {
+    "title": "Atwood Machine",
+    "description": "Two masses connected by a light inextensible rope over a frictionless, massless pulley.",
+    "keywords": ["atwood", "pulley", "rope over", "two masses", "hanging masses", "string over", "counterweight", "elevator"],
+    "params": {
+      "m1": {"label": "Mass 1 (left)",   "symbol": "m_1", "unit": "kg",   "min": 0.1, "max": 20, "step": 0.1,  "default": 3},
+      "m2": {"label": "Mass 2 (right)",  "symbol": "m_2", "unit": "kg",   "min": 0.1, "max": 20, "step": 0.1,  "default": 2},
+      "h":  {"label": "Starting height", "symbol": "h",   "unit": "m",    "min": 0.5, "max": 4,  "step": 0.1,  "default": 1.5},
+      "g":  {"label": "Gravity",         "symbol": "g",   "unit": "m/s²", "min": 0.5, "max": 30, "step": 0.01, "default": 9.81}
+    },
+    "options": {}
+  },
+  "cart_pendulum": {
+    "title": "Spring Cart with Pendulum",
+    "description": "A cart of mass M on a frictionless rail held between two springs, with a pendulum hanging from it. Coupled non-linear Lagrangian dynamics.",
+    "keywords": ["cart pendulum", "pendulum on a cart", "pendulum attached", "coupled", "cart with", "trolley", "sliding mass", "springs on both sides", "between two springs", "lagrang"],
+    "params": {
+      "M":      {"label": "Cart mass",            "symbol": "M",        "unit": "kg",   "min": 0.2, "max": 20,  "step": 0.1,  "default": 2},
+      "m":      {"label": "Bob mass",             "symbol": "m",        "unit": "kg",   "min": 0.05, "max": 10, "step": 0.05, "default": 0.6},
+      "k":      {"label": "Spring constant (each)", "symbol": "k",      "unit": "N/m",  "min": 1,   "max": 300, "step": 1,    "default": 15},
+      "L":      {"label": "Pendulum length",      "symbol": "L",        "unit": "m",    "min": 0.3, "max": 3,   "step": 0.05, "default": 1.2},
+      "x0":     {"label": "Initial cart offset",  "symbol": "x_M",      "unit": "m",    "min": -0.6, "max": 0.6, "step": 0.01, "default": 0.3},
+      "theta0": {"label": "Initial angle",        "symbol": "\\theta_0","unit": "°",    "min": -80, "max": 80,  "step": 1,    "default": 20},
+      "g":      {"label": "Gravity",              "symbol": "g",        "unit": "m/s²", "min": 0.5, "max": 30,  "step": 0.01, "default": 9.81}
+    },
+    "options": {}
+  },
+  "double_pendulum": {
+    "title": "Double Pendulum",
+    "description": "Two rigid rods with point masses, joined end to end. A classic chaotic system; a ghost copy with a tiny perturbation shows sensitivity to initial conditions.",
+    "keywords": ["double pendulum", "chaos", "chaotic", "two pendulums", "butterfly"],
+    "params": {
+      "m1":     {"label": "Mass 1",  "symbol": "m_1",       "unit": "kg",   "min": 0.1,  "max": 10,  "step": 0.1,  "default": 1},
+      "m2":     {"label": "Mass 2",  "symbol": "m_2",       "unit": "kg",   "min": 0.1,  "max": 10,  "step": 0.1,  "default": 1},
+      "L1":     {"label": "Rod 1 length", "symbol": "L_1", "unit": "m",    "min": 0.3,  "max": 3,   "step": 0.05, "default": 1.2},
+      "L2":     {"label": "Rod 2 length", "symbol": "L_2", "unit": "m",    "min": 0.3,  "max": 3,   "step": 0.05, "default": 1.0},
+      "theta1": {"label": "Angle 1", "symbol": "\\theta_1", "unit": "°",    "min": -180, "max": 180, "step": 1,    "default": 120},
+      "theta2": {"label": "Angle 2", "symbol": "\\theta_2", "unit": "°",    "min": -180, "max": 180, "step": 1,    "default": -20},
+      "g":      {"label": "Gravity", "symbol": "g",         "unit": "m/s²", "min": 0.5,  "max": 30,  "step": 0.01, "default": 9.81}
+    },
+    "options": {
+      "ghost": {"label": "Chaos ghost (Δθ₁ = 0.001°)", "choices": ["on", "off"], "default": "on"}
+    }
+  },
+  "track": {
+    "title": "Custom Track",
+    "description": "A ball, cart, block or point mass moving on any track shape: semicircular or parabolic bowls, sine waves, hills, inclines, roller coasters with vertical loops, a track y = f(x), or AI-generated custom segments. Motion comes from gravity, the normal reaction (including curvature), friction, rolling and loss of contact.",
+    "keywords": ["track", "bowl", "dish", "semicircular", "semicircle", "hemispher", "half-pipe", "halfpipe", "u-shaped", "valley", "parabolic", "parabola", "sine", "sinusoid", "wave", "loop", "loop-the-loop", "roller coaster", "rollercoaster", "coaster", "hill", "hills", "curve", "curved", "skate", "y ="],
+    "params": {
+      "R":          {"label": "Bowl radius",            "symbol": "R",            "unit": "m",    "min": 0.5,  "max": 50,   "step": 0.1,  "default": 5,    "shapes": ["bowl"]},
+      "W":          {"label": "Bowl width",             "symbol": "W",            "unit": "m",    "min": 1,    "max": 80,   "step": 0.5,  "default": 10,   "shapes": ["parabola"]},
+      "D":          {"label": "Bowl depth",             "symbol": "D",            "unit": "m",    "min": 0.2,  "max": 40,   "step": 0.1,  "default": 3,    "shapes": ["parabola"]},
+      "A":          {"label": "Wave amplitude",         "symbol": "A",            "unit": "m",    "min": 0.1,  "max": 10,   "step": 0.05, "default": 1,    "shapes": ["sine"]},
+      "lambda":     {"label": "Wavelength",             "symbol": "\\lambda",     "unit": "m",    "min": 1,    "max": 60,   "step": 0.5,  "default": 8,    "shapes": ["sine"]},
+      "phi":        {"label": "Phase",                  "symbol": "\\varphi",     "unit": "°",    "min": -180, "max": 180,  "step": 5,    "default": 0,    "shapes": ["sine"]},
+      "periods":    {"label": "Number of waves",        "symbol": "n",            "unit": "",     "min": 0.5,  "max": 8,    "step": 0.25, "default": 2.5,  "shapes": ["sine"]},
+      "H":          {"label": "Starting hill height",   "symbol": "H",            "unit": "m",    "min": 0.5,  "max": 80,   "step": 0.5,  "default": 10,   "shapes": ["ramp", "coaster"]},
+      "Lr":         {"label": "Hill length",            "symbol": "L",            "unit": "m",    "min": 1,    "max": 80,   "step": 0.5,  "default": 12,   "shapes": ["ramp"]},
+      "theta":      {"label": "Incline angle",          "symbol": "\\theta",      "unit": "°",    "min": 2,    "max": 80,   "step": 1,    "default": 30,   "shapes": ["incline"]},
+      "Ls":         {"label": "Incline length",         "symbol": "L",            "unit": "m",    "min": 0.5,  "max": 50,   "step": 0.5,  "default": 8,    "shapes": ["incline"]},
+      "flat":       {"label": "Flat run-out length",    "symbol": "L_f",          "unit": "m",    "min": 1,    "max": 100,  "step": 0.5,  "default": 15,   "shapes": ["ramp", "incline"]},
+      "R_loop":     {"label": "Loop radius (0 = none)", "symbol": "R",            "unit": "m",    "min": 0,    "max": 20,   "step": 0.1,  "default": 3.5,  "shapes": ["coaster"]},
+      "hills":      {"label": "Extra hills",            "symbol": "n",            "unit": "",     "min": 0,    "max": 4,    "step": 1,    "default": 1,    "shapes": ["coaster"]},
+      "hill_ratio": {"label": "Hill height ÷ H",        "symbol": "\\eta",        "unit": "",     "min": 0.1,  "max": 0.95, "step": 0.05, "default": 0.5,  "shapes": ["coaster"]},
+      "xa":         {"label": "Track from x",           "symbol": "x_a",          "unit": "m",    "min": -50,  "max": 50,   "step": 0.5,  "default": -6,   "shapes": ["function"]},
+      "xb":         {"label": "Track to x",             "symbol": "x_b",          "unit": "m",    "min": -50,  "max": 50,   "step": 0.5,  "default": 6,    "shapes": ["function"]},
+      "x0":         {"label": "Start position x",       "symbol": "x_0",          "unit": "m",    "min": -100, "max": 100,  "step": 0.05, "default": 0},
+      "h_drop":     {"label": "Dropped from height above track", "symbol": "h",   "unit": "m",    "min": 0,    "max": 30,   "step": 0.1,  "default": 0},
+      "v0":         {"label": "Initial push speed",     "symbol": "v_0",          "unit": "m/s",  "min": 0,    "max": 40,   "step": 0.1,  "default": 0},
+      "F":          {"label": "Applied force (along track)", "symbol": "F",       "unit": "N",    "min": 0,    "max": 500,  "step": 0.5,  "default": 0},
+      "tF":         {"label": "Force duration",         "symbol": "t_F",          "unit": "s",    "min": 0,    "max": 60,   "step": 0.1,  "default": 2},
+      "m":          {"label": "Mass",                   "symbol": "m",            "unit": "kg",   "min": 0.05, "max": 500,  "step": 0.05, "default": 1},
+      "size":       {"label": "Size (ball diameter / block side / cart length)", "symbol": "d", "unit": "m", "min": 0.05, "max": 3, "step": 0.01, "default": 0.5},
+      "g":          {"label": "Gravity",                "symbol": "g",            "unit": "m/s²", "min": 0.5,  "max": 30,   "step": 0.01, "default": 9.81},
+      "mu_s":       {"label": "Static friction",        "symbol": "\\mu_s",       "unit": "",     "min": 0,    "max": 1.5,  "step": 0.01, "default": 0,    "bodies": ["ball", "block", "point"]},
+      "mu_k":       {"label": "Kinetic friction",       "symbol": "\\mu_k",       "unit": "",     "min": 0,    "max": 1.5,  "step": 0.01, "default": 0,    "bodies": ["ball", "block", "point"]},
+      "c_rr":       {"label": "Rolling resistance",     "symbol": "c_{rr}",       "unit": "",     "min": 0,    "max": 0.3,  "step": 0.005, "default": 0,   "bodies": ["cart"]},
+      "e":          {"label": "Restitution (bounciness)", "symbol": "e",          "unit": "",     "min": 0,    "max": 1,    "step": 0.05, "default": 0.4}
+    },
+    "options": {
+      "shape":   {"label": "Track shape", "choices": ["bowl", "parabola", "sine", "ramp", "incline", "coaster", "function", "custom"], "default": "bowl"},
+      "body":    {"label": "Body", "choices": ["ball", "cart", "block", "point"], "default": "ball"},
+      "contact": {"label": "Ball motion", "choices": ["roll", "slide"], "default": "roll", "bodies": ["ball"]},
+      "inertia": {"label": "Ball type", "choices": ["solid", "hollow"], "default": "solid", "bodies": ["ball"]},
+      "rail":    {"label": "Cart contact", "choices": ["free", "locked"], "default": "free", "bodies": ["cart"]},
+      "dir":     {"label": "Initial direction", "choices": ["right", "left"], "default": "right"},
+      "ends":    {"label": "Track ends", "choices": ["auto", "walls", "open"], "default": "auto"}
+    }
+  }
+}
